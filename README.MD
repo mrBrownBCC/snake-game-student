@@ -7,15 +7,16 @@
 
 ### Example Project
 
-[Vist a completed version of the project here](https://mrbrownbcc.github.io/libgdx-tutorial-SOLUTION/)
+[Vist a completed version of the project here](https://mrbrownbcc.github.io/snake-game-SOLUTION/)
 
 ### Setup Steps:
 1. To test, you will need to forward port 6080, similar to other projects. 
 2. Click the link below and keep open in another tab. It contains the initial instructions
 
 ### Additional Resources:
-[https://libgdx.com/wiki/](libgdx wiki)
-[https://www.w3schools.com/java/java_arraylist.asp](Java Arraylists)
+- [libgdx wiki](https://libgdx.com/wiki/)
+- [Java Arraylists](https://www.w3schools.com/java/java_arraylist.asp)
+
 
 ### Core requirements
 1. Make a functional version of the snake game.
@@ -51,6 +52,8 @@ To test 'desktop version', use the following terminal command:
 ./gradlew lwjgl3:run
 ```
 NOTE - to do this you must have turned on port forwarding of port 6080
+
+FURTHER NOTE - sometimes it can seem like the snake has dissapeared. This is likely caused by it moving off the screen before you switched tabs. If this happens, just close the window, click run again, and move back to the testing window quickly. 
 
 
 ### Deploying
