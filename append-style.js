@@ -12,7 +12,7 @@ canvas {
     height: auto !important;
     max-width: 100% !important;
     max-height: 100% !important;
-    aspect-ratio : 4/3 !important;
+    aspect-ratio : 1/1 !important;
     display: block;
     margin: 0 auto;
     border: 1px solid #000; /* Optional border for debugging */

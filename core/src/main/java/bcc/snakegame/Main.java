@@ -48,7 +48,7 @@ public class Main extends InputAdapter implements ApplicationListener {
     private int score = 0;
 
     @Override
-    public void create() {
+    public void create() {// DONT EDIT HERE
         camera = new OrthographicCamera(480, 480);
         camera.setToOrtho(false, 480, 480);
         shapeRenderer = new ShapeRenderer();
@@ -70,6 +70,65 @@ public class Main extends InputAdapter implements ApplicationListener {
         placeApple();
     }
 
+    //checkpoint 1
+    @Override
+    public boolean keyDown(int keycode) {
+        if (gameOver) return false;
+        // Update next direction based on arrow keys
+        //need to make sure that it won't be doing a 180! For example, we can't go North if curDir is SOUTH
+        if (keycode == Keys.UP) {
+            nextDir = Direction.NORTH;
+        } else if (keycode == Keys.DOWN) {
+            nextDir = Direction.SOUTH;
+        } else if (keycode == Keys.LEFT) {
+            nextDir = Direction.WEST;
+        } else if (keycode == Keys.RIGHT) {
+            nextDir = Direction.EAST;
+        }
+        return true;
+    }
+
+    //checkpoint 1
+    private void checkApple() {
+        //check if the head of the snake is on the apple
+        //if it is, increase score, and use your placeApple() method
+
+        snake.remove(0);//only run this code if there is NO APPLE - this deletes the last snake segment. 
+    }
+    
+
+    //CHECKPOINT 2
+    //should return true if the position is located on the snake
+    //useful for determining if we have a legal apple position
+    private boolean onSnake(GridPosition pos) {
+
+        return false;
+    }
+
+    //checkpoint 2 - need to update apple position creation!
+    private void placeApple() {
+        apple = new GridPosition(5,9);
+        //You will need to use random numbers and a while loop to set the apple position.
+        //generate candidate position
+        //check that its not on the snake
+        //if it is on the snake, try again
+        //if not on the snake, set the apple position
+
+    }
+    
+    //checkpoint 2
+    private void checkDeath() {
+        //check if the head of the snake is an illegal position
+
+        // Check out of bounds
+
+        // Check hitting itself
+
+        // set gameOver to true if we die
+    }
+
+
+    //helper function for animation, can be safely ignored. DONT EDIT
     private ArrayList<GridPosition> copySnake(ArrayList<GridPosition> source) {
         ArrayList<GridPosition> copy = new ArrayList<>();
         for (GridPosition gp : source) {
@@ -77,25 +136,11 @@ public class Main extends InputAdapter implements ApplicationListener {
         }
         return copy;
     }
-
-    private void placeApple() {
-        apple = new GridPosition(MathUtils.random(GRID_SIZE-1), MathUtils.random(GRID_SIZE-1));
-        // Ensure apple is not on snake
-        while (onSnake(apple)) {
-            apple.x = MathUtils.random(GRID_SIZE-1);
-            apple.y = MathUtils.random(GRID_SIZE-1);
-        }
-    }
-
-    private boolean onSnake(GridPosition pos) {
-        for (GridPosition s : snake) {
-            if (s.x == pos.x && s.y == pos.y) return true;
-        }
-        return false;
-    }
+    
+    
 
     @Override
-    public void render() {
+    public void render() {//READ, but don't modify! (unless you are done with the core requirements.)
         if (gameOver) {
             renderGameOver();
             return;
@@ -152,7 +197,7 @@ public class Main extends InputAdapter implements ApplicationListener {
         batch.end();
     }
 
-    private void doMove() {
+    private void doMove() {//again, don't change this one
         // Before we move, copy the current snake state to prevSnake
         prevSnake = copySnake(snake);
 
@@ -163,7 +208,7 @@ public class Main extends InputAdapter implements ApplicationListener {
         checkApple();
     }
 
-    private void moveSnake() {
+    private void moveSnake() {//DONT need to change
         // Compute new head position based on current direction
         GridPosition head = snake.get(snake.size()-1);
         GridPosition newHead = new GridPosition(head);
@@ -179,38 +224,8 @@ public class Main extends InputAdapter implements ApplicationListener {
         snake.add(newHead);
     }
 
-    private void checkApple() {
-        GridPosition head = snake.get(snake.size()-1);
-        if (head.x == apple.x && head.y == apple.y) {
-            // Ate apple, increase score and place a new one
-            score++;
-            placeApple();
-            // Do not remove tail - snake grows
-        } else {
-            // Remove tail segment
-            snake.remove(0);
-        }
-    }
 
-    private void checkDeath() {
-        GridPosition head = snake.get(snake.size()-1);
-        // Check out of bounds
-        if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
-            gameOver = true;
-            return;
-        }
-
-        // Check hitting itself
-        for (int i=0; i<snake.size()-1; i++) {
-            GridPosition seg = snake.get(i);
-            if (seg.x == head.x && seg.y == head.y) {
-                gameOver = true;
-                return;
-            }
-        }
-    }
-
-    private void renderGameOver() {
+    private void renderGameOver() {// no need to change
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -238,21 +253,7 @@ public class Main extends InputAdapter implements ApplicationListener {
         moveTimer = 0f;
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        if (gameOver) return false;
-        // Update next direction based on arrow keys
-        if (keycode == Keys.UP && curDir != Direction.SOUTH) {
-            nextDir = Direction.NORTH;
-        } else if (keycode == Keys.DOWN && curDir != Direction.NORTH) {
-            nextDir = Direction.SOUTH;
-        } else if (keycode == Keys.LEFT && curDir != Direction.EAST) {
-            nextDir = Direction.WEST;
-        } else if (keycode == Keys.RIGHT && curDir != Direction.WEST) {
-            nextDir = Direction.EAST;
-        }
-        return true;
-    }
+    
 
     @Override
     public void dispose() {
